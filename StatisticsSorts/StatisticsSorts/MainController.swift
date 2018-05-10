@@ -38,15 +38,14 @@ class MainController: UIViewController {
 //        }
     }
     
-    func operationQueueuSort(typeSort: TypeSort) {
+    private func operationQueueuSort(typeSort: TypeSort) {
         let mainQueue = DispatchQueue.main
         let model = TimeStatistics()
         var count = 0
         
-        for item in self.firstData {
-            print("for")
+        for item in firstData {
             let time = model.timeSort(typeSort: typeSort, array: item.value)
-            self.resultData[typeSort.rawValue][count] = "for \(item.key) , time is \(time)"
+            resultData[typeSort.rawValue][count] = "for \(item.key) , time is \(time)"
             mainQueue.sync {
                 self.statisticsTable.reloadRows(at: [IndexPath(row: count, section: typeSort.rawValue)], with: .automatic)
             }
@@ -54,17 +53,17 @@ class MainController: UIViewController {
         }
     }
     
-    func GCDsort() {
+    private func GCDsort() {
         let mainQueue = DispatchQueue.main
         let model = TimeStatistics()
         
         for value in 0..<TypeSort.count {
             var count = 0
             let typeSort = TypeSort(rawValue: value)
-            for item in self.firstData {
-
+            for item in firstData {
+                
                 let time = model.timeSort(typeSort: typeSort, array: item.value)
-                self.resultData[typeSort.rawValue][count] = "for \(item.key) , time is \(time)"
+                resultData[typeSort.rawValue][count] = "for \(item.key) , time is \(time)"
                 mainQueue.sync {
                     self.statisticsTable.reloadRows(at: [IndexPath(row: count, section: typeSort.rawValue)], with: .automatic)
                 }
@@ -98,7 +97,7 @@ extension MainController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let view = UIView(frame: CGRect(x: 0, y: 0, width: tableView.bounds.width, height: 25))
         view.backgroundColor = .lightGray
-        let label = UILabel(frame: CGRect(x: 15, y: 0, width: tableView.bounds.width - 30, height: 25))
+        let label = UILabel(frame: CGRect(x: 15, y: 0, width: tableView.bounds.width, height: 25))
         label.text = TypeSort(rawValue: section).description
         view.addSubview(label)
         return view

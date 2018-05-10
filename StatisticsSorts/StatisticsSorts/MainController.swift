@@ -25,8 +25,7 @@ class MainController: UIViewController {
         super.viewDidLoad()
         resultData = Array(repeating: Array(repeating: "", count: firstData.count), count: TypeSort.count)
 
-        let background = DispatchQueue.global()
-        background.async {
+        DispatchQueue.global().async {
             self.GCDsort()
         }
         
@@ -40,14 +39,13 @@ class MainController: UIViewController {
     }
     
     private func operationQueueuSort(typeSort: TypeSort) {
-        let mainQueue = DispatchQueue.main
         let model = TimeStatistics()
         var count = 0
         
         for item in firstData {
             let time = model.timeSort(typeSort: typeSort, array: item.value)
             resultData[typeSort.rawValue][count] = "for \(item.key) , time is \(time)"
-            mainQueue.sync {
+            DispatchQueue.main.sync {
                 self.statisticsTable.reloadRows(at: [IndexPath(row: count, section: typeSort.rawValue)], with: .automatic)
             }
             count += 1
@@ -55,7 +53,6 @@ class MainController: UIViewController {
     }
     
     private func GCDsort() {
-        let mainQueue = DispatchQueue.main
         let model = TimeStatistics()
         
         for value in 0..<TypeSort.count {
@@ -65,7 +62,7 @@ class MainController: UIViewController {
                 
                 let time = model.timeSort(typeSort: typeSort, array: item.value)
                 resultData[typeSort.rawValue][count] = "for \(item.key) , time is \(time)"
-                mainQueue.sync {
+                DispatchQueue.main.sync {
                     self.statisticsTable.reloadRows(at: [IndexPath(row: count, section: typeSort.rawValue)], with: .automatic)
                 }
                 count += 1

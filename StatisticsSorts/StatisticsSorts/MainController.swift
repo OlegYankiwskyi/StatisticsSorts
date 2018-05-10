@@ -29,11 +29,12 @@ class MainController: UIViewController {
         background.async {
             self.GCDsort()
         }
-//        let oq = OperationQueue()
-//        oq.addOperation {
+        
+//        let operationQueue = OperationQueue()
+//        operationQueue.addOperation {
 //            self.operationQueueuSort(typeSort: TypeSort.merge)
 //        }
-//        oq.addOperation {
+//        operationQueue.addOperation {
 //            self.operationQueueuSort(typeSort: TypeSort.quick)
 //        }
     }

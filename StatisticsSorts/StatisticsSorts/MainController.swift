@@ -44,7 +44,7 @@ class MainController: UIViewController {
         
         for item in firstData {
             let time = model.timeSort(typeSort: typeSort, array: item.value)
-            resultData[typeSort.rawValue][count] = "for \(item.key) , time is \(time)"
+            resultData[typeSort.rawValue][count] = "for \(item.key) , time is \(time) sec"
             DispatchQueue.main.sync {
                 self.statisticsTable.reloadRows(at: [IndexPath(row: count, section: typeSort.rawValue)], with: .automatic)
             }

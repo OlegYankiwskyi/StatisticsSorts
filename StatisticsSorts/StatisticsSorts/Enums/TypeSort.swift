@@ -9,11 +9,11 @@
 import Foundation
 
 enum TypeSort: Int {
+    case bubble
     case quick
     case insert
     case select
     case merge
-    case bubble
     
     var description: String {
         get {

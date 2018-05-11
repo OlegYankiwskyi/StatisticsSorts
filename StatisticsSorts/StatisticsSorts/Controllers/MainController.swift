@@ -13,6 +13,7 @@ class MainController: UIViewController {
     @IBOutlet weak var statusBar: UIProgressView!
     @IBOutlet weak var statisticsTable: UITableView!
     @IBOutlet weak var statusLabel: UILabel!
+    @IBOutlet weak var reloadButton: UIButton!
     var resultData: [[String]]!
     let arrayTypeSort: [TypeSort] = [.quick, .bubble, .merge, .insert, .select]
     let dataModel = DataModel()
@@ -30,6 +31,7 @@ class MainController: UIViewController {
             } else if parseValue == 100 {
                 statusBar.setProgress(newValue, animated: true)
                 statusLabel.text = "Done"
+                reloadButton.isEnabled = true
             }
         }
     }
@@ -37,6 +39,13 @@ class MainController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         resultData = Array(repeating: Array(repeating: "wait", count: dataModel.count), count: arrayTypeSort.count)
+        reload()
+    }
+    
+    private func reload() {
+        progress = 0.0
+        resultData = Array(repeating: Array(repeating: "wait", count: dataModel.count), count: arrayTypeSort.count)
+        statisticsTable.reloadData()
         
         DispatchQueue.global().async {
             self.startStatistics([.insert, .select, .bubble])
@@ -63,6 +72,11 @@ class MainController: UIViewController {
                 count += 1
             }
         }
+    }
+    
+    @IBAction func tapReloadButton(_ sender: Any) {
+        reloadButton.isEnabled = false
+        reload()
     }
 }
 

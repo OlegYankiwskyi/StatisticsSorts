@@ -98,7 +98,7 @@ extension MainController: UITableViewDelegate, UITableViewDataSource {
         let view = UIView(frame: CGRect(x: 0, y: 0, width: tableView.bounds.width, height: 25))
         view.backgroundColor = .lightGray
         let label = UILabel(frame: CGRect(x: 15, y: 0, width: tableView.bounds.width, height: 25))
-        label.text = TypeSort(rawValue: section).description
+        label.text = TypeSort(rawValue: section)?.description ?? "default"
         view.addSubview(label)
         return view
     }

@@ -10,8 +10,10 @@ import UIKit
 
 class MainController: UIViewController {
     
+    @IBOutlet weak var statusBar: UIProgressView!
     @IBOutlet weak var statisticsTable: UITableView!
     var resultData: Array<Array<String>>!
+    let arrayTypeSort: [TypeSort] = [.quick, .bubble, .merge, .insert, .select]
     let firstData = [
         "1000"  :  Array<Int>.makeList(count: 1000, range: 999)
         ,"2000"  :  Array<Int>.makeList(count: 2000, range: 999)
@@ -19,51 +21,42 @@ class MainController: UIViewController {
         ,"8000"  :  Array<Int>.makeList(count: 8000, range: 999)
         ,"16000" :  Array<Int>.makeList(count: 16000,range: 999)
     ]
-
+    
+    var progress: Float {
+        get {
+            return statusBar.progress
+        }
+        set {
+            statusBar.setProgress(newValue, animated: true)
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        resultData = Array(repeating: Array(repeating: "", count: firstData.count), count: TypeSort.count)
+        statusBar.setProgress(0, animated: false)
+        resultData = Array(repeating: Array(repeating: "", count: firstData.count), count: arrayTypeSort.count)
 
         DispatchQueue.global().async {
-            self.GCDsort()
+            self.startStatistics([.insert, .bubble, .select])
         }
-        
-//        let operationQueue = OperationQueue()
-//        operationQueue.addOperation {
-//            self.operationQueueuSort(typeSort: TypeSort.merge)
-//        }
-//        operationQueue.addOperation {
-//            self.operationQueueuSort(typeSort: TypeSort.quick)
-//        }
-    }
-    
-    private func operationQueueuSort(typeSort: TypeSort) {
-        let model = TimeStatistics()
-        var count = 0
-        
-        for item in firstData {
-            let time = model.timeSort(typeSort: typeSort, array: item.value)
-            resultData[typeSort.rawValue][count] = "for \(item.key) , time is \(time) sec"
-            DispatchQueue.main.sync {
-                self.statisticsTable.reloadRows(at: [IndexPath(row: count, section: typeSort.rawValue)], with: .automatic)
-            }
-            count += 1
+        OperationQueue().addOperation {
+            self.startStatistics([.merge, .quick])
         }
     }
     
-    private func GCDsort() {
+    private func startStatistics(_ typesSorts: [TypeSort]) {
         let model = TimeStatistics()
-        
-        for value in 0..<TypeSort.count {
-            var count = 0
-            let typeSort = TypeSort(rawValue: value)
+        var count = Int()
+        let step = 1.0 / ( Float(arrayTypeSort.count) * Float(firstData.count) )
+
+        for typeSort in typesSorts {
+            count = 0
             for item in firstData {
-                
                 let time = model.timeSort(typeSort: typeSort, array: item.value)
-                resultData[typeSort.rawValue][count] = "for \(item.key) , time is \(time)"
+                resultData[typeSort.rawValue][count] = "for \(item.key) , time is \(time) sec"
                 DispatchQueue.main.sync {
-                    self.statisticsTable.reloadRows(at: [IndexPath(row: count, section: typeSort.rawValue)], with: .automatic)
+                    statisticsTable.reloadRows(at: [IndexPath(row: count, section: typeSort.rawValue)], with: .automatic)
+                    progress += step
                 }
                 count += 1
             }
@@ -89,7 +82,7 @@ extension MainController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return TypeSort.count
+        return arrayTypeSort.count
     }
 
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {

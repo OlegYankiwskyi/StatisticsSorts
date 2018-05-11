@@ -32,12 +32,6 @@ enum TypeSort {
         }
     }
     
-    static var count: Int {
-        get {
-            return 5
-        }
-    }
-    
     var rawValue: Int {
         get {
             switch self {

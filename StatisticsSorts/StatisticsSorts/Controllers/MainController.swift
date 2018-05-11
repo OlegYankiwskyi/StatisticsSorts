@@ -27,7 +27,6 @@ class MainController: UIViewController {
         get {
             return statusBar.progress
         }
-        
         set {
             let parseValue = Int(newValue * 100)
 
@@ -44,10 +43,10 @@ class MainController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         progress = 0
-        resultData = Array(repeating: Array(repeating: "", count: primaryData.count), count: arrayTypeSort.count)
+        resultData = Array(repeating: Array(repeating: "wait", count: primaryData.count), count: arrayTypeSort.count)
         
         DispatchQueue.global().async {
-            self.startStatistics([.insert, .bubble, .select])
+            self.startStatistics([.insert, .select, .bubble])
         }
         OperationQueue().addOperation {
             self.startStatistics([.merge, .quick])

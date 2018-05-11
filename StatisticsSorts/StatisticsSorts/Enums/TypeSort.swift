@@ -10,10 +10,10 @@ import Foundation
 
 enum TypeSort: Int {
     case quick
-    case bubble
     case insert
     case select
     case merge
+    case bubble
     
     var description: String {
         get {

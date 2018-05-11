@@ -13,15 +13,9 @@ class MainController: UIViewController {
     @IBOutlet weak var statusBar: UIProgressView!
     @IBOutlet weak var statisticsTable: UITableView!
     @IBOutlet weak var statusLabel: UILabel!
-    var resultData: Array<Array<String>>!
+    var resultData: [[String]]!
     let arrayTypeSort: [TypeSort] = [.quick, .bubble, .merge, .insert, .select]
-    let primaryData = [
-        "1000"  :  Array<Int>.makeList(count: 1000, range: 999)
-        ,"2000"  :  Array<Int>.makeList(count: 2000, range: 999)
-        ,"4000"  :  Array<Int>.makeList(count: 4000, range: 999)
-        ,"8000"  :  Array<Int>.makeList(count: 8000, range: 999)
-        ,"16000" :  Array<Int>.makeList(count: 16000,range: 999)
-    ]
+    let dataModel = DataModel()
     
     var progress: Float {
         get {
@@ -42,8 +36,7 @@ class MainController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        progress = 0
-        resultData = Array(repeating: Array(repeating: "wait", count: primaryData.count), count: arrayTypeSort.count)
+        resultData = Array(repeating: Array(repeating: "wait", count: dataModel.count), count: arrayTypeSort.count)
         
         DispatchQueue.global().async {
             self.startStatistics([.insert, .select, .bubble])
@@ -56,11 +49,11 @@ class MainController: UIViewController {
     private func startStatistics(_ typesSorts: [TypeSort]) {
         let model = TimeStatistics()
         var count = Int()
-        let step = 1.0 / ( Float(arrayTypeSort.count) * Float(primaryData.count) )
+        let step = 1.0 / ( Float(arrayTypeSort.count) * Float(dataModel.count) )
 
         for typeSort in typesSorts {
             count = 0
-            for item in primaryData {
+            for item in dataModel.data {
                 let time = model.timeSort(typeSort: typeSort, array: item.value)
                 resultData[typeSort.rawValue][count] = "for \(item.key) , time is \(time) sec"
                 DispatchQueue.main.sync {
@@ -75,7 +68,7 @@ class MainController: UIViewController {
 
 extension MainController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return primaryData.count
+        return dataModel.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

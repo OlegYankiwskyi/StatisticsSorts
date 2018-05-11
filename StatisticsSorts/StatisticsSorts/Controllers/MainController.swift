@@ -48,10 +48,10 @@ class MainController: UIViewController {
         statisticsTable.reloadData()
         
         DispatchQueue.global().async {
-            self.startStatistics([.insert, .select, .bubble])
+            self.startStatistics([.bubble])
         }
         OperationQueue().addOperation {
-            self.startStatistics([.merge, .quick])
+            self.startStatistics([.insert, .quick, .merge, .select])
         }
     }
     

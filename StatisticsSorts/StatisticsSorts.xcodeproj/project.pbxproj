@@ -109,12 +109,12 @@
 		1D56258220A43BA60024BA6E /* StatisticsSorts */ = {
 			isa = PBXGroup;
 			children = (
+				1D6BD12020A5927A00CA5E01 /* Controllers */,
 				1D5625B920A43D430024BA6E /* Extensions */,
 				1D5625B420A43C230024BA6E /* Enums */,
 				1D5625B120A43BEB0024BA6E /* Models */,
 				1D5625C020A451140024BA6E /* CustomCell.swift */,
 				1D56258320A43BA60024BA6E /* AppDelegate.swift */,
-				1D56258520A43BA60024BA6E /* MainController.swift */,
 				1D56258720A43BA60024BA6E /* Main.storyboard */,
 				1D56258A20A43BA70024BA6E /* Assets.xcassets */,
 				1D56258C20A43BA70024BA6E /* LaunchScreen.storyboard */,
@@ -165,6 +165,14 @@
 				1D5625C220A451C00024BA6E /* UITableViewCell.swift */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		1D6BD12020A5927A00CA5E01 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				1D56258520A43BA60024BA6E /* MainController.swift */,
+			);
+			path = Controllers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

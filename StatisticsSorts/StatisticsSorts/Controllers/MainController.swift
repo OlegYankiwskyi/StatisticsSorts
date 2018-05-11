@@ -45,7 +45,7 @@ class MainController: UIViewController {
         super.viewDidLoad()
         progress = 0
         resultData = Array(repeating: Array(repeating: "", count: primaryData.count), count: arrayTypeSort.count)
-
+        
         DispatchQueue.global().async {
             self.startStatistics([.insert, .bubble, .select])
         }

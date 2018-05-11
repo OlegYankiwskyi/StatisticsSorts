@@ -11,6 +11,11 @@
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <array key="HelveticaNeueLights.ttc">
+            <string>HelveticaNeue-Light</string>
+        </array>
+    </customFonts>
     <scenes>
         <!--Main Controller-->
         <scene sceneID="tne-QT-ifu">
@@ -58,13 +63,22 @@
                             <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="lBl-GA-9IP">
                                 <rect key="frame" x="30" y="60" width="260" height="2"/>
                             </progressView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9f5-41-gTs">
+                                <rect key="frame" x="20" y="50" width="280" height="0.0"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="WgM-ib-hy4" secondAttribute="trailing" id="0AF-c9-y6S"/>
                             <constraint firstItem="lBl-GA-9IP" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="30" id="3Xc-bQ-AOE"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="9f5-41-gTs" secondAttribute="trailing" constant="20" id="DxZ-jI-HY1"/>
                             <constraint firstAttribute="trailing" secondItem="lBl-GA-9IP" secondAttribute="trailing" constant="30" id="E3g-fk-exl"/>
+                            <constraint firstItem="lBl-GA-9IP" firstAttribute="top" secondItem="9f5-41-gTs" secondAttribute="bottom" constant="10" id="J37-V0-hPi"/>
                             <constraint firstItem="WgM-ib-hy4" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="RLC-w6-twY"/>
+                            <constraint firstItem="9f5-41-gTs" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="bn0-Rc-lfa"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="WgM-ib-hy4" secondAttribute="bottom" id="g0Q-8a-bDq"/>
                             <constraint firstItem="lBl-GA-9IP" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="40" id="g0u-8Q-xid"/>
                             <constraint firstItem="WgM-ib-hy4" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" multiplier="5" id="qh6-X3-J1o"/>
@@ -74,6 +88,7 @@
                     <connections>
                         <outlet property="statisticsTable" destination="WgM-ib-hy4" id="pPp-yz-cey"/>
                         <outlet property="statusBar" destination="lBl-GA-9IP" id="jkk-Z2-lMS"/>
+                        <outlet property="statusLabel" destination="9f5-41-gTs" id="ok3-73-73M"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

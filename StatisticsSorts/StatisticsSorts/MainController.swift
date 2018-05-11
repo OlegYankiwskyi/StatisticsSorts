@@ -12,9 +12,10 @@ class MainController: UIViewController {
     
     @IBOutlet weak var statusBar: UIProgressView!
     @IBOutlet weak var statisticsTable: UITableView!
+    @IBOutlet weak var statusLabel: UILabel!
     var resultData: Array<Array<String>>!
     let arrayTypeSort: [TypeSort] = [.quick, .bubble, .merge, .insert, .select]
-    let firstData = [
+    let primaryData = [
         "1000"  :  Array<Int>.makeList(count: 1000, range: 999)
         ,"2000"  :  Array<Int>.makeList(count: 2000, range: 999)
         ,"4000"  :  Array<Int>.makeList(count: 4000, range: 999)
@@ -26,15 +27,24 @@ class MainController: UIViewController {
         get {
             return statusBar.progress
         }
+        
         set {
-            statusBar.setProgress(newValue, animated: true)
+            let parseValue = Int(newValue * 100)
+
+            if parseValue < 100 && parseValue >= 0 {
+                statusBar.setProgress(newValue, animated: true)
+                statusLabel.text = "\( parseValue ) %"
+            } else if parseValue == 100 {
+                statusBar.setProgress(newValue, animated: true)
+                statusLabel.text = "Done"
+            }
         }
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        statusBar.setProgress(0, animated: false)
-        resultData = Array(repeating: Array(repeating: "", count: firstData.count), count: arrayTypeSort.count)
+        progress = 0
+        resultData = Array(repeating: Array(repeating: "", count: primaryData.count), count: arrayTypeSort.count)
 
         DispatchQueue.global().async {
             self.startStatistics([.insert, .bubble, .select])
@@ -47,11 +57,11 @@ class MainController: UIViewController {
     private func startStatistics(_ typesSorts: [TypeSort]) {
         let model = TimeStatistics()
         var count = Int()
-        let step = 1.0 / ( Float(arrayTypeSort.count) * Float(firstData.count) )
+        let step = 1.0 / ( Float(arrayTypeSort.count) * Float(primaryData.count) )
 
         for typeSort in typesSorts {
             count = 0
-            for item in firstData {
+            for item in primaryData {
                 let time = model.timeSort(typeSort: typeSort, array: item.value)
                 resultData[typeSort.rawValue][count] = "for \(item.key) , time is \(time) sec"
                 DispatchQueue.main.sync {
@@ -66,7 +76,7 @@ class MainController: UIViewController {
 
 extension MainController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return firstData.count
+        return primaryData.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

@@ -38,7 +38,6 @@ class MainController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        resultData = Array(repeating: Array(repeating: "wait", count: dataModel.count), count: arrayTypeSort.count)
         reload()
     }
     
